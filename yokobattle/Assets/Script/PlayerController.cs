@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private Transform groundCheckBase;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -45,6 +46,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
      rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        bool testGrounded = IsGrounded();
+        Debug.Log(testGrounded);
+        //Debug.Log("helloworld"); 
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -62,7 +66,9 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
+        RaycastHit2D hit = Physics2D.Raycast(groundCheckBase.position, Vector2.down, 0.31f);
+        Debug.DrawRay(groundCheckBase.position, Vector2.down * 0.31f, Color.red);
+        
         return hit.collider != null;
     }
 }
