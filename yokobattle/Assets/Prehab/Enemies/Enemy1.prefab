@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1808224239513868822}
   - component: {fileID: 2262859850602721679}
   - component: {fileID: 6994485954963400533}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -212,9 +212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy1Script
   bounceBulletPrefab: {fileID: 7581312711080636949, guid: f0f9972198d47a341a12da728e23102c, type: 3}
-  battlePatterns:
-  - {fileID: 0}
-  - {fileID: 0}
+  BombPrehab: {fileID: 4280362545500283319, guid: f73b0481f47ec9643a7718a4f9cabde5, type: 3}
+  explosionBulletPrefab: {fileID: 930605209685628786, guid: 82c74c9dbf4d01f45b93f4c388a9ec9a, type: 3}
 --- !u!1 &7781825000596675254
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6281537163724247411}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

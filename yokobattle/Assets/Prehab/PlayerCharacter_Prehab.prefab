@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2270629704121636798}
   - component: {fileID: 1197946223605366192}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 6046386924861408102}
   - component: {fileID: 6389951401698236201}
   - component: {fileID: 6194101443559070064}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCharacter_Prehab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5753350094675669933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
-  jumpForce: 4
+  jumpForce: 10
   groundCheckBase: {fileID: 8933377187474399567}
 --- !u!61 &6046386924861408102
 BoxCollider2D:
@@ -251,7 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8933377187474399567}
   - component: {fileID: 2649137694545415221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

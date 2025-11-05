@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5912804699151553875}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy1BounceBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 3894104417408907465}
   - component: {fileID: 5393641399819219664}
   - component: {fileID: 3008947960924313049}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Circle
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d06c1f5710b3b4b9a143d53bee60ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletController
-  speed: 14
+  speed: 6
   direction: {x: 1, y: 0}
   defaultDamage: 25
 --- !u!58 &5393641399819219664
