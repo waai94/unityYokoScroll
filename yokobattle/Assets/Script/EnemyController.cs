@@ -7,7 +7,9 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
     private GameObject target;  //ターゲットとなるオブジェクト(例:プレイヤー)
+    public GameObject Target { get { return target; } }
     private Rigidbody2D rb;
+    [SerializeField] private GameObject defaultBulletPrehab;//デフォルトの弾のプレハブ
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -33,26 +35,71 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    public void JumpToPosition(Vector2 startPos, Vector2 targetPos, float arcHeight)//放物線を描いてジャンプする
+    public void JumpToPosition(Vector2 startPos, Vector2 targetPos, float arcHeight)
     {
-        float gravity = Mathf.Abs(Physics2D.gravity.y);//重力加速度を取得
+        float gravity = Mathf.Abs(Physics2D.gravity.y);
+        float displacementX = targetPos.x - startPos.x;
+        float displacementY = targetPos.y - startPos.y;
 
-        float displacementX = targetPos.x - startPos.x;//水平距離
-        float displacementY = targetPos.y - startPos.y;//垂直距離
+        // 放物線の頂点をゴールより高く設定
+        float peakY = Mathf.Max(startPos.y, targetPos.y) + arcHeight;
 
-        float time = Mathf.Sqrt(2 * arcHeight / gravity) +
-                     Mathf.Sqrt(2 * (displacementY - arcHeight) / gravity);//飛行時間を計算
+        // 上昇・下降それぞれの高さを算出
+        float heightUp = peakY - startPos.y;
+        float heightDown = peakY - targetPos.y;
 
-        float velocityY = Mathf.Sqrt(2 * gravity * arcHeight);//垂直速度を計算
-        float velocityX = displacementX / time;//   水平速度を計算
+        // それぞれの時間を計算
+        float timeUp = Mathf.Sqrt(2 * heightUp / gravity);
+        float timeDown = Mathf.Sqrt(2 * heightDown / gravity);
+        float totalTime = timeUp + timeDown;
 
-        rb.linearVelocity = new Vector2(velocityX, velocityY);//速度を設定
+        // 安全チェック
+        if (float.IsNaN(totalTime) || totalTime <= 0f)
+        {
+            Debug.LogWarning("Invalid jump parameters.");
+            return;
+        }
+
+        float velocityY = Mathf.Sqrt(2 * gravity * heightUp);
+        float velocityX = displacementX / totalTime;
+
+        rb.linearVelocity = new Vector2(velocityX, velocityY);
     }
+
 
     public float angleToTarget(Vector2 targetPosition)//ターゲットへの角度を取得
     {
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;//ターゲットへの方向ベクトルを計算
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;//角度を計算
         return angle;
+    }
+
+    //たまを発射する
+    public void ShootBullet(GameObject bulletPrefab, Vector2 shootPosition, float angle, float distanceFromShooter)//弾のプレハブ、発射位置、発射角度、発射元からの距離
+    {
+        //弾のプレハブが指定されていない場合、デフォルトの弾のプレハブを使用
+        if (!bulletPrefab)
+        {
+            
+            if (!defaultBulletPrehab)
+           {
+                Debug.LogWarning("No bullet prefab assigned for shooting.");
+                return;
+           }
+           else
+           {
+                bulletPrefab = defaultBulletPrehab;
+            }
+        }
+        Vector2 spawnPoint = shootPosition + new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) * distanceFromShooter; //発射元からの距離を考慮した発射位置を計算
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint, Quaternion.Euler(0, 0, angle)); //弾を生成
+        BulletController bulletController = bullet.GetComponentInChildren<BulletController>(); //弾のコントローラーを取得
+        if (!bulletController)
+        {
+            Debug.LogWarning("BulletController component not found on bullet prefab.");
+            return;
+        }
+
+        bulletController.BulletInitialize(new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad))); //弾の初期化
     }
 }

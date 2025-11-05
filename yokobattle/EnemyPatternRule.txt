@@ -1,0 +1,107 @@
+
+【Enemy行動パターン設計ルール（更新版）】
+
+---
+■ 基本構造
+- 各敵キャラクター（EnemyX）はメインスクリプト（例：Enemy1Script）を持つ。
+- 攻撃パターンごとの動作は「BattlePatternBase」を継承した個別クラス（BattlePattern1, BattlePattern2など）として定義する。
+- Enemy1Scriptは現在のパターンをAddComponentで動的に付与し、切り替え制御のみを行う。
+
+---
+■ 責務分離
+- Enemy1Script：敵AI全体の流れを制御（開始、次パターンへの遷移など）
+- BattlePatternBase：パターン共通の機能を提供（enemyController参照、初期化処理など）
+- BattlePatternX：個別行動の具体的な実装（例：ジャンプ攻撃、バウンス弾攻撃など）
+- EnemyController：移動・発射などの基本アクションを提供
+- BulletController：弾の共通動作を定義（速度・方向・ダメージ・衝突処理）
+
+---
+■ 設計ルール
+1. **パターンごとに独立したスクリプトを作成する**
+   - 各BattlePatternは自分の行動のみを責務とする。
+   - InvokeやInvokeRepeatingの管理もパターン内部で完結させる。
+
+2. **切り替えはEnemy1Script側で統一**
+   - SetNextPattern(int next)で次のパターンを指定。
+   - ChangePattern()で既存パターンをDestroyし、新しいパターンをAddComponentする。
+
+3. **共通処理の継承**
+   - BattlePatternBaseにenemyController参照、Initialize()、EndPattern()など共通処理を記載。
+   - 各パターンでoverrideして動作を記述。
+
+4. **弾管理のルール**
+   - 弾PrefabはEnemy1ScriptでSerializeField管理し、パターンへ渡す。
+   - 弾タグは"Bullet"で統一。
+   - 弾スクリプト（例：Enemy1BounceBulletScript）はBulletControllerを継承。
+
+5. **パターンの流れ**
+   - StartPattern()：行動開始。Invokeや攻撃開始を設定。
+   - EndPattern()：行動終了。Invoke解除、弾管理、次パターン指定。
+   - 各パターンでログ（Debug.Log）を残す。
+
+---
+■ 設計思想
+- 1パターン = 1責務
+- EnemyScriptはステートマシン的制御を担う。
+- 継承 + コンポジションを意識した柔軟設計（UEのState / BehaviorComponentに近い）
+
+---
+■ 拡張方針
+- 新しい攻撃パターンを追加する場合は「BattlePatternX.cs」を新規作成するだけ。
+- Enemy1Scriptには新しいcaseを1行追加するのみ。
+- 弾種を増やす場合はBulletController継承 or コンポジションで追加可能。
+"""
+
+【BulletController設計ルールまとめ】
+
+▼基本設計
+- UnityのC#スクリプト。
+- MonoBehaviourを継承。
+- Rigidbody2Dを使用して移動制御。
+- 弾は他オブジェクトから初期化可能。
+- 継承を前提にprotectedメンバを活用。
+
+▼命名規則
+- 変数名：キャメルケース（例：bulletSpeed, defaultDamage）
+- 関数名：パスカルケース（例：SetDirection, BulletInitialize）
+- クラス名：パスカルケース（例：BulletController, FireBullet）
+
+▼物理挙動
+- Rigidbody2D.linearVelocityを使用して速度を制御。
+- Awakeでは初期化しない（StartまたはInitializeで行う）。
+- 初期化関数(BulletInitialize)で進行方向と速度を設定。
+- 弾の進行方向は常に正規化する。
+
+▼衝突処理
+- OnCollisionEnter2DでHealthManagerを検出。
+- HealthManagerが存在すればTakeDamage()を呼び出し。
+- 衝突後にDestroy(gameObject)で弾を削除。
+
+▼拡張設計
+- FireBulletやArcBulletなどの派生クラスで挙動を拡張。
+- 派生クラスではUpdateやFixedUpdateをオーバーライドして特有挙動を実装。
+- 共通部分は親クラス（BulletController）で完結させる。
+
+▼良くない設計例
+- 継承元の変数をprivateにして再定義する（例：子でspeedを再宣言）。
+- BulletInitialize内でInstantiateするなど、責務の混在。
+- 子クラスでUpdate内にDestroy処理を書く。
+- Rigidbody2DをAwakeで使おうとしてnullエラーを起こす。
+
+▼Pattern2バージョンの定義
+- Start内でdirectionを設定する代わりに、BulletInitializeのみで弾を動かす。
+- 初期化されていない場合、弾は動かない。
+- SetDirectionは任意のタイミングで再設定可能。
+- これにより、BulletControllerを汎用的なベースクラスとして利用可能。
+
+例：Pattern2のBulletInitialize
+public void BulletInitialize(Vector2 initDirection)
+{
+    rb = GetComponent<Rigidbody2D>();
+    direction = initDirection.normalized;
+    if (rb != null)
+    {
+        rb.linearVelocity = direction * speed;
+    }
+}
+
