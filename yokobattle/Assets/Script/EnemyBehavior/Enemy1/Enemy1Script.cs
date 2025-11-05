@@ -5,7 +5,10 @@ public class Enemy1Script : MonoBehaviour
 {
     private EnemyController enemyController;
     private int behaviorPattern = 1; // 現在のパターン番号
+    private float pattern2AngleOffset = 0f; // パターン2の角度オフセット
     [SerializeField] private GameObject bounceBulletPrefab;
+    [SerializeField] private GameObject BombPrehab;// ボムのプレハブ
+    [SerializeField ] private GameObject explosionBulletPrefab;
 
     void Start()
     {
@@ -33,6 +36,8 @@ public class Enemy1Script : MonoBehaviour
                 break;
             case 3:
                 BattlePattern3();
+                break;
+            case 4: BattlePattern4();    
                 break;
             default:
                 Debug.Log("Enemy1 Battle Pattern Default");
@@ -67,10 +72,10 @@ public class Enemy1Script : MonoBehaviour
     {
         Debug.Log("Enemy1 Battle Pattern 2");
 
-        float timeToStop = 3.0f;
-        float timeToMove = timeToStop + 3.0f;
+        float timeToStop = 1f;
+        float timeToMove = timeToStop + 2f;
 
-        InvokeRepeating(nameof(ShootBounceBullet), 0.3f, 0.3f);
+        InvokeRepeating(nameof(ShootBounceBullet), 0.1f, 0.1f);
         Invoke(nameof(StopAllBullets), timeToStop);
         Invoke(nameof(MoveAllBounceBullet), timeToMove);
         Invoke(nameof(EndBattlePattern2), timeToMove + 3.0f);
@@ -84,18 +89,42 @@ public class Enemy1Script : MonoBehaviour
     // ===== パターン3：Hello World!を出力して次に戻る =====
     void BattlePattern3()
     {
-        //パターンを考案中・・・
-        // ここに新しい攻撃パターンを実装する
-        Debug.Log("Enemy1 Battle Pattern 3");
-        Debug.Log("Hello World!");
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject bomb = Instantiate(BombPrehab, transform.position, Quaternion.identity);
+            Vector2 direction = UnityEngine.Random.insideUnitCircle.normalized;
+            bomb.GetComponentInChildren<BombBaseScript>().BombInitialize(direction, 5f);
+        }
         Invoke(nameof(EndBattlePattern3), 2.0f); // 2秒後に戻る
     }
 
     void EndBattlePattern3()
     {
-        EndCurrentPattern(1);
+        EndCurrentPattern(4);
     }
 
+    // ====パターン４:爆発する弾を空から降らせる=====
+    void BattlePattern4()
+    {
+        Debug.Log("Enemy1 Battle Pattern 4");
+        InvokeRepeating(nameof(AirStrike), 0.5f, 0.5f);
+        Invoke(nameof(EndBattlePattern4), 3.0f); // 3秒後に戻る
+    }
+
+    void AirStrike()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject bomb = Instantiate(explosionBulletPrefab, new Vector2(UnityEngine.Random.Range(-8f, 8f), 6f), Quaternion.identity);
+            Vector2 direction = Vector2.down;
+            bomb.GetComponentInChildren<BombBaseScript>().BombInitialize(direction, 0f);// 真下に落とす
+        }
+    }
+    void EndBattlePattern4()
+    {
+        CancelInvoke(nameof(AirStrike));
+        EndCurrentPattern(1);
+    }
     // ===== 弾の挙動関連 =====
 
     // プレイヤーに向かって弾を撃つ
@@ -114,10 +143,11 @@ public class Enemy1Script : MonoBehaviour
         Vector2 targetVector = enemyController.Target.transform.position;
         for (int i = 0; i < 10; i++)
         {
-            float angleOffset = i * 36f; // 360度を10分割
+            float angleOffset = i * 36f + pattern2AngleOffset; // 360度を10分割
             float angle = enemyController.angleToTarget(targetVector) + angleOffset;
             enemyController.ShootBullet(bounceBulletPrefab, transform.position, angle, 1f);
         }
+        pattern2AngleOffset += 10f; // 次回の発射時に少し回転させる
     }
 
     // すべてのバウンス弾を停止

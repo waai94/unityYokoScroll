@@ -4,7 +4,8 @@ public class BulletController : MonoBehaviour
 {
     [SerializeField] protected float speed = 10f;
     [SerializeField] protected Vector2 direction = Vector2.right; // Default direction
-    [SerializeField] protected int defaultDamage = 1; // Default damage value
+    [SerializeField] protected float defaultDamage = 1; // Default damage value
+    [SerializeField] protected float lifetime = 5f; // Lifetime of the bullet in seconds
     protected Rigidbody2D rb;
     void Awake()
     {
@@ -14,6 +15,10 @@ public class BulletController : MonoBehaviour
     protected void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if(lifetime > 0f)
+        {
+            Invoke(nameof(DestroyBullet), lifetime); // Schedule destruction after lifetime
+        }
     }
 
     public void SetDirection(Vector2 newDirection)
@@ -46,6 +51,7 @@ public class BulletController : MonoBehaviour
         
     }
 
+    //
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         HealthManager health = collision.gameObject.GetComponent<HealthManager>();
@@ -54,5 +60,10 @@ public class BulletController : MonoBehaviour
             health.TakeDamage(defaultDamage);
         }
         Destroy(gameObject);
+    }
+    // íeÇè¡ãéÇ∑ÇÈÉÅÉ\ÉbÉh
+    protected void DestroyBullet()
+    {
+               Destroy(gameObject);
     }
 }

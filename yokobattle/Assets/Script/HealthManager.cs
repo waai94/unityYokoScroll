@@ -3,11 +3,11 @@ using UnityEngine;
 public class HealthManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private int maxHealth = 100;
-    private int currentHealth;
+    [SerializeField] private float maxHealth = 100f;
+    private float currentHealth;
 
-    public int MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
-    public int CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
+    public float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
+    public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
 
     public delegate void DeathEventHandler();
     public event DeathEventHandler OnDeath;
@@ -23,7 +23,7 @@ public class HealthManager : MonoBehaviour
         
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth < 0)
