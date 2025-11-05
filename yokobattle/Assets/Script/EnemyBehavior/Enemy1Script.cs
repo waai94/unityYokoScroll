@@ -17,18 +17,20 @@ public class Enemy1Script : MonoBehaviour
     {
         
     }
-
+    //バトル開始
     void BattleStart()
     {
         Debug.Log("Enemy1 Battle Start");
         Invoke("ChangeBattlePattern", 2.0f);
     }
 
+    //次のパターンに変更
     void SetNextPattern(int next)
     {
         behaviorPattern = next;
         ChangeBattlePattern();
     }
+    //パターン変更
     void ChangeBattlePattern()
     {
                 switch (behaviorPattern)
@@ -51,6 +53,23 @@ public class Enemy1Script : MonoBehaviour
             enemyController.Target.transform.position,
             2.0f
         );
+        InvokeRepeating("ShootBulletTowardPlayer", 0.1f, 0.1f); //0.1秒ごとにプレイヤーに向かって弾を撃つ
+        Invoke("EndBattlePattern1", 4.0f);
+    }
+
+    //パターン1終了
+    void EndBattlePattern1()
+    {
+        CancelInvoke("ShootBulletTowardPlayer");
+        SetNextPattern(1);
+    }
+    //プレイヤーに向かって弾を撃つ
+    void ShootBulletTowardPlayer()
+    {
+        Debug.Log("Enemy1 Shoot Bullet Toward Player");
+        Vector2 targetVector = enemyController.Target.transform.position;
+        float angle = enemyController.angleToTarget(targetVector);
+        enemyController.ShootBullet(null, this.transform.position, angle);
 
     }
 }

@@ -13,10 +13,7 @@ public class BulletController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(rb != null)
-        {
-            rb.linearVelocity = direction.normalized * speed; // Set velocity based on direction and speed
-        }
+       
     }
 
     public void SetDirection(Vector2 newDirection)
@@ -25,6 +22,17 @@ public class BulletController : MonoBehaviour
         if(rb != null)
         {
             rb.linearVelocity = direction * speed; // Update velocity when direction changes
+        }
+    }
+
+    // 弾を別スクリプトから初期化するためのメソッド
+    public void BulletInitialize(Vector2 initDirection)
+    {
+        direction = initDirection.normalized;
+       
+        if(rb != null)
+        {
+            rb.linearVelocity = direction * speed; // Set velocity based on initialized direction
         }
     }
     // Update is called once per frame

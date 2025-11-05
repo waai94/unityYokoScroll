@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private GameObject target;  //ターゲットとなるオブジェクト(例:プレイヤー)
     public GameObject Target { get { return target; } }
     private Rigidbody2D rb;
+    [SerializeField] private GameObject defaultBulletPrehab;//デフォルトの弾のプレハブ
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -71,5 +72,33 @@ public class EnemyController : MonoBehaviour
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;//ターゲットへの方向ベクトルを計算
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;//角度を計算
         return angle;
+    }
+
+    //たまを発射する
+    public void ShootBullet(GameObject bulletPrefab, Vector2 shootPosition, float angle)
+    {
+        //弾のプレハブが指定されていない場合、デフォルトの弾のプレハブを使用
+        if (!bulletPrefab)
+        {
+            
+            if (!defaultBulletPrehab)
+           {
+                Debug.LogWarning("No bullet prefab assigned for shooting.");
+                return;
+           }
+           else
+           {
+                bulletPrefab = defaultBulletPrehab;
+            }
+        }
+        GameObject bullet = Instantiate(bulletPrefab, shootPosition, Quaternion.Euler(0, 0, angle)); //弾を生成
+        BulletController bulletController = bullet.GetComponent<BulletController>();
+        if(!bulletController)
+        {
+            Debug.LogWarning("BulletController component not found on bullet prefab.");
+            return;
+        }
+
+        bulletController.BulletInitialize(new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad))); //弾の初期化
     }
 }

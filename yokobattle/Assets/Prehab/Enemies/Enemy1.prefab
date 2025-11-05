@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   moveSpeed: 3
+  defaultBulletPrehab: {fileID: 7581312711080636949, guid: 8e36c4b814232b8478b7dec5b73f027a, type: 3}
 --- !u!114 &3046042893520405795
 MonoBehaviour:
   m_ObjectHideFlags: 0
