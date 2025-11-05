@@ -19,6 +19,14 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    public void SetDirection(Vector2 newDirection)
+    {
+        direction = newDirection.normalized;
+        if(rb != null)
+        {
+            rb.linearVelocity = direction * speed; // Update velocity when direction changes
+        }
+    }
     // Update is called once per frame
     void Update()
     {

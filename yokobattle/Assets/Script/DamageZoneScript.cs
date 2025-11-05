@@ -17,7 +17,7 @@ public class DamageZoneScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("DamageZoneScript OnTriggerEnter: " + other.name);
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
             HealthManager healthManager = other.GetComponent<HealthManager>();
             if (healthManager != null)
