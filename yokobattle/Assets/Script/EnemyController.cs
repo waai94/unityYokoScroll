@@ -75,7 +75,7 @@ public class EnemyController : MonoBehaviour
     }
 
     //たまを発射する
-    public void ShootBullet(GameObject bulletPrefab, Vector2 shootPosition, float angle)
+    public void ShootBullet(GameObject bulletPrefab, Vector2 shootPosition, float angle, float distanceFromShooter)//弾のプレハブ、発射位置、発射角度、発射元からの距離
     {
         //弾のプレハブが指定されていない場合、デフォルトの弾のプレハブを使用
         if (!bulletPrefab)
@@ -91,9 +91,10 @@ public class EnemyController : MonoBehaviour
                 bulletPrefab = defaultBulletPrehab;
             }
         }
-        GameObject bullet = Instantiate(bulletPrefab, shootPosition, Quaternion.Euler(0, 0, angle)); //弾を生成
-        BulletController bulletController = bullet.GetComponent<BulletController>();
-        if(!bulletController)
+        Vector2 spawnPoint = shootPosition + new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) * distanceFromShooter; //発射元からの距離を考慮した発射位置を計算
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint, Quaternion.Euler(0, 0, angle)); //弾を生成
+        BulletController bulletController = bullet.GetComponentInChildren<BulletController>(); //弾のコントローラーを取得
+        if (!bulletController)
         {
             Debug.LogWarning("BulletController component not found on bullet prefab.");
             return;

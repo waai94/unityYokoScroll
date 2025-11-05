@@ -198,7 +198,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6994485954963400533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3c948663f24274db1a4ca43fe89f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy1Script
+  bounceBulletPrefab: {fileID: 7581312711080636949, guid: f0f9972198d47a341a12da728e23102c, type: 3}
+  battlePatterns:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &7781825000596675254
 GameObject:
   m_ObjectHideFlags: 0
