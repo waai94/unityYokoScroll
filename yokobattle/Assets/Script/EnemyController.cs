@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
     private GameObject target;  //ターゲットとなるオブジェクト(例:プレイヤー)
+    public GameObject Target { get { return target; } }
     private Rigidbody2D rb;
     void Awake()
     {
@@ -33,21 +34,37 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    public void JumpToPosition(Vector2 startPos, Vector2 targetPos, float arcHeight)//放物線を描いてジャンプする
+    public void JumpToPosition(Vector2 startPos, Vector2 targetPos, float arcHeight)
     {
-        float gravity = Mathf.Abs(Physics2D.gravity.y);//重力加速度を取得
+        float gravity = Mathf.Abs(Physics2D.gravity.y);
+        float displacementX = targetPos.x - startPos.x;
+        float displacementY = targetPos.y - startPos.y;
 
-        float displacementX = targetPos.x - startPos.x;//水平距離
-        float displacementY = targetPos.y - startPos.y;//垂直距離
+        // 放物線の頂点をゴールより高く設定
+        float peakY = Mathf.Max(startPos.y, targetPos.y) + arcHeight;
 
-        float time = Mathf.Sqrt(2 * arcHeight / gravity) +
-                     Mathf.Sqrt(2 * (displacementY - arcHeight) / gravity);//飛行時間を計算
+        // 上昇・下降それぞれの高さを算出
+        float heightUp = peakY - startPos.y;
+        float heightDown = peakY - targetPos.y;
 
-        float velocityY = Mathf.Sqrt(2 * gravity * arcHeight);//垂直速度を計算
-        float velocityX = displacementX / time;//   水平速度を計算
+        // それぞれの時間を計算
+        float timeUp = Mathf.Sqrt(2 * heightUp / gravity);
+        float timeDown = Mathf.Sqrt(2 * heightDown / gravity);
+        float totalTime = timeUp + timeDown;
 
-        rb.linearVelocity = new Vector2(velocityX, velocityY);//速度を設定
+        // 安全チェック
+        if (float.IsNaN(totalTime) || totalTime <= 0f)
+        {
+            Debug.LogWarning("Invalid jump parameters.");
+            return;
+        }
+
+        float velocityY = Mathf.Sqrt(2 * gravity * heightUp);
+        float velocityX = displacementX / totalTime;
+
+        rb.linearVelocity = new Vector2(velocityX, velocityY);
     }
+
 
     public float angleToTarget(Vector2 targetPosition)//ターゲットへの角度を取得
     {
