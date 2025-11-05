@@ -47,8 +47,7 @@ public class PlayerController : MonoBehaviour
     {
      rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
         bool testGrounded = IsGrounded();
-        Debug.Log(testGrounded);
-        //Debug.Log("helloworld"); 
+       
     }
 
     public void OnMove(InputAction.CallbackContext context)
