@@ -1,0 +1,38 @@
+【Enemy AI 行動パターン設計ルール（Enemy1Script の傾向より）】
+
+■ 1. 構造設計
+・各敵ごとに専用のスクリプト（例：Enemy1Script）を作成する。
+・共通の移動・攻撃処理は EnemyController に集約。
+・個別行動（ジャンプ、射撃など）は EnemyXScript で制御。
+
+■ 2. 行動パターン管理
+・現在の行動パターンは int 変数（behaviorPattern）で管理。
+・SetNextPattern(int next) により次の行動を設定し、ChangeBattlePattern() で実行。
+・次のパターン決定は内部で呼び出され、明示的に次状態へ遷移する構造。
+
+■ 3. 行動フェーズ制御
+・各パターンでは、
+  ① 開始ログ
+  ② 行動内容（例：ジャンプ → 射撃 → 終了）
+  ③ Invoke によるタイミング制御
+・終了時に CancelInvoke() を使って定期処理を止め、SetNextPattern() で次行動へ。
+
+■ 4. Invoke の使い方
+・Invoke(メソッド名, 秒) → 一度だけ遅延実行。
+・InvokeRepeating(メソッド名, 開始遅延, 間隔) → 一定間隔で実行。
+・CancelInvoke(メソッド名) → 定期呼び出しの停止。
+
+■ 5. 行動ループ
+・BattleStart() → 最初の行動を起動。
+・各パターン終了時に SetNextPattern() を呼ぶことで連続行動が成立。
+
+■ 6. 攻撃処理
+・ShootBulletTowardPlayer() はプレイヤー座標を参照して射撃。
+・EnemyController 側で弾生成・角度計算などを担当。
+
+■ 7. 注意点
+・Invoke の呼びすぎで Update に頼らない無限ループを避ける。
+・Target や Rigidbody の null チェックを行う。
+・BattlePattern 関数は行動の粒度（ジャンプ→射撃→終了）を明確に保つ。
+
+この構造により、パターン追加時は switch-case の中に新関数を追加するだけで拡張可能。
