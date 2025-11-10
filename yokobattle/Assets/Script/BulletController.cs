@@ -35,7 +35,7 @@ public class BulletController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         direction = initDirection.normalized;
-       Debug.Log("Bullet initialized with direction: " + direction);
+    
         if (rb != null)
         {
             rb.linearVelocity = direction * speed; // Set velocity based on initialized direction
