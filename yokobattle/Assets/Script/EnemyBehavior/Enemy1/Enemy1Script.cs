@@ -57,8 +57,8 @@ public class Enemy1Script : MonoBehaviour
     void BattlePattern1()
     {
         Debug.Log("Enemy1 Battle Pattern 1");
-        enemyController.JumpToPosition(transform.position, enemyController.Target.transform.position, 2.0f);
-        InvokeRepeating(nameof(ShootBulletTowardPlayer), 0.3f, 0.3f);
+        enemyController.JumpToPosition(transform.position, enemyController.Target.transform.position, 5.0f);
+        InvokeRepeating(nameof(ShootBulletTowardPlayer), 0.3f, 0.6f);
         Invoke(nameof(EndBattlePattern1), 3.0f);
     }
 
@@ -72,10 +72,10 @@ public class Enemy1Script : MonoBehaviour
     {
         Debug.Log("Enemy1 Battle Pattern 2");
 
-        float timeToStop = 1f;
-        float timeToMove = timeToStop + 2f;
+        float timeToStop = 2f;
+        float timeToMove = timeToStop + 1f;
 
-        InvokeRepeating(nameof(ShootBounceBullet), 0.1f, 0.1f);
+        InvokeRepeating(nameof(ShootBounceBullet), 0.3f, 0.3f);
         Invoke(nameof(StopAllBullets), timeToStop);
         Invoke(nameof(MoveAllBounceBullet), timeToMove);
         Invoke(nameof(EndBattlePattern2), timeToMove + 3.0f);
@@ -93,7 +93,7 @@ public class Enemy1Script : MonoBehaviour
         {
             GameObject bomb = Instantiate(BombPrehab, transform.position, Quaternion.identity);
             Vector2 direction = UnityEngine.Random.insideUnitCircle.normalized;
-            bomb.GetComponentInChildren<BombBaseScript>().BombInitialize(direction, 5f);
+            bomb.GetComponentInChildren<BombBaseScript>().BombInitialize(direction, 10f);
         }
         Invoke(nameof(EndBattlePattern3), 2.0f); // 2ïbå„Ç…ñﬂÇÈ
     }

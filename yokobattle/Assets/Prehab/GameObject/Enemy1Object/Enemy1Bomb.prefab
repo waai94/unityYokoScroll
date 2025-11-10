@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5610052159745045175}
   - component: {fileID: 981188523907565077}
   - component: {fileID: 7070045331950146965}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,6 +109,7 @@ MonoBehaviour:
   explosionRadius: 5
   explosionDamage: 1
   fuseTime: 3
+  fuseTimeDelay: 0.5
   explosionSound: {fileID: 0}
   fuseSound: {fileID: 0}
 --- !u!50 &981188523907565077

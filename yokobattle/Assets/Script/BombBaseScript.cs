@@ -54,6 +54,7 @@ public class BombBaseScript : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.up * explosionRadius, Color.red, 2.0f);
         foreach (var hitCollider in hitColliders)
         {
+            if(!hitCollider) continue; // 安全チェック
             // ダメージを与える処理（例: プレイヤーや敵にダメージを与える）
             HealthManager healthManager = hitCollider.GetComponent<HealthManager>();
             if (healthManager != null)
