@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using System;
 using UnityEngine;
+using System.Collections.Generic;  
 
 public class Enemy1Script : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class Enemy1Script : MonoBehaviour
     [SerializeField] private GameObject bounceBulletPrefab;
     [SerializeField] private GameObject BombPrehab;// ボムのプレハブ
     [SerializeField ] private GameObject explosionBulletPrefab;
-
+    [SerializeField] private List<GameObject> explosionBulletPrefabs;
     void Start()
     {
         enemyController = GetComponent<EnemyController>();
