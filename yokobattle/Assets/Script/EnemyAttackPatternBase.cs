@@ -45,15 +45,19 @@ public class EnemyAttackPatternBase : MonoBehaviour
     {
 
     }
-
-    void Attack()
+    //攻撃を実行するメソッド
+  public  void EnemyAttackStart()
     {
         //攻撃ロジックをここに実装
         AttackPatternState attackPattern = DetermineAttackPattern();
         if (attackPattern != null)
         {
             //選択された攻撃パターンに基づいて攻撃を実行
-            Instantiate(attackPattern.prefab, transform.position, transform.rotation);
+         GameObject attackObject = Instantiate(attackPattern.prefab, transform.position, transform.rotation);
+            EnemyAttackObjectBase attackScript = attackObject.GetComponent<EnemyAttackObjectBase>();
+            attackScript.InitializeObject(this.gameObject, this);
+            //必要に応じてattackScriptのプロパティを設定
+
         }
     }
 
@@ -114,4 +118,6 @@ public class EnemyAttackPatternBase : MonoBehaviour
             }
         }
     }
+
+    
 }
