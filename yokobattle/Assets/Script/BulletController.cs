@@ -6,6 +6,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] protected Vector2 direction = Vector2.right; // Default direction
     [SerializeField] protected float defaultDamage = 1; // Default damage value
     [SerializeField] protected float lifetime = 5f; // Lifetime of the bullet in seconds
+    [SerializeField] protected float gravityScale = 0f; // Gravity scale for the bullet
     protected Rigidbody2D rb;
     void Awake()
     {
@@ -19,6 +20,12 @@ public class BulletController : MonoBehaviour
         {
             Invoke(nameof(DestroyBullet), lifetime); // Schedule destruction after lifetime
         }
+        if(!rb)
+        {
+            Debug.LogWarning("Rigidbody2D component not found on bullet.");
+            return;
+        }
+        rb.gravityScale = gravityScale;// Set gravity scale
     }
 
     public void SetDirection(Vector2 newDirection)
