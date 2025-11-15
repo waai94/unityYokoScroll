@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
   m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_NotificationBehavior: 2
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 8933377187474399567}
   - component: {fileID: 2649137694545415221}
   m_Layer: 6
-  m_Name: Square (1)
+  m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -381,7 +381,7 @@ Transform:
   m_GameObject: {fileID: 8429610162659563830}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0393, y: -0.0127, z: 0}
+  m_LocalPosition: {x: 0.0393, y: -0.83, z: 0}
   m_LocalScale: {x: 0.89108473, y: 1.6756253, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         moveAction.performed += OnMove;
-        moveAction.canceled += OnMove;
+       moveAction.canceled += OnMove;
         jumpAction.performed += OnJump;
         jumpAction.canceled += OnJumpCanceled;
         attackAction.performed += OnAttack;
@@ -60,26 +60,32 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
-        bool testGrounded = IsGrounded();
-       // Debug.Log($"Move Velocity: {rb.linearVelocity}, IsGrounded: {testGrounded}");
-
-      if(isJumping)
-        {
-            JumpContinue();
-            Debug.Log("Continuing Jump");
-        }
+     
        
     }
 
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        bool testGrounded = IsGrounded();
+        // Debug.Log($"Move Velocity: {rb.linearVelocity}, IsGrounded: {testGrounded}");
+
+        if (isJumping)
+        {
+            JumpContinue();
+
+        }
+    }
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        Debug.Log($"Move Input: {moveInput}");
+        var device = context.control.device;
+        Debug.Log($"Move Input: {moveInput}, Device: {device}");
         if (moveInput.x != 0)
         {
             forwardDirection = moveInput.x > 0 ? 1f : -1f;
         }
+
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -89,7 +95,9 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpTimeCounter = 0;
             isJumping = true;
+            Debug.Log("Jump Performed");
         }
+
     }
 
     private void OnJumpCanceled(InputAction.CallbackContext context)
@@ -117,7 +125,7 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheckBase.position, Vector2.down, 0.31f);
         Debug.DrawRay(groundCheckBase.position, Vector2.down * 0.31f, Color.red);
-        
+        Debug.Log($"Ground Check Hit: {hit.collider} ");
         return hit.collider != null;
     }
 
@@ -126,7 +134,7 @@ public class PlayerController : MonoBehaviour
     {
                if (jumpTimeCounter < maxJumpTime)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // ジャンプ力を維持
+            rb.AddForce(Vector2.up * jumpHoldForce, ForceMode2D.Force); // ジャンプ力を維持
             jumpTimeCounter += Time.deltaTime;
         }
         else
