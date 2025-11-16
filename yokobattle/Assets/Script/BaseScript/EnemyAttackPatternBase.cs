@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 /// <summary>
 /// 
 /// </summary>
@@ -17,7 +18,7 @@ public class EnemyAttackPatternBase : MonoBehaviour
     }
 
 
-    protected class AttackPatternState
+    [Serializable]protected class AttackPatternState
     {
         public string name; //攻撃パターン名 attack pattern name
 
@@ -33,11 +34,12 @@ public class EnemyAttackPatternBase : MonoBehaviour
 
 
     [SerializeField] protected List<AttackPatternState> attackPatterns; //攻撃パターンのリスト
+    [SerializeField] protected float delayForFirstAttack = 1.0f; //最初の攻撃までの遅延時間
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        Invoke("EnemyAttackStart", delayForFirstAttack);//最初の攻撃を遅延させて開始
     }
 
     // Update is called once per frame
