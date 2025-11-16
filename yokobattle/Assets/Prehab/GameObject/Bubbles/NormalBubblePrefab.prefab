@@ -105,13 +105,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b19e271e6804a4aa1e38b5f18f1642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BubbleControllerScript
-  speed: 10
+  speed: 15
   direction: {x: 1, y: 0}
   defaultDamage: 1
   lifetime: 5
   gravityScale: 0
   popEffectPrefab: {fileID: 0}
   BuoyancyRange: 3
+  dampingForceRange: 0.5
 --- !u!50 &2805138732019269783
 Rigidbody2D:
   serializedVersion: 5
@@ -127,7 +128,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
