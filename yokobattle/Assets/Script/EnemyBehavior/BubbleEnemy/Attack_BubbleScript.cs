@@ -29,13 +29,18 @@ public class Attack_BubbleScript : EnemyAttackObjectBase
 
     void FireBubble()
     {
+        if (enemyController)
+        {
+            enemyController.LookToTarget(); //敵が向いている方向を更新
+                                          Debug.Log("Enemy Look To Target");
+        }
         //バブルを発射するロジックをここに実装
         GameObject bubbleInstance = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
         BubbleControllerScript bubbleScript = bubbleInstance.GetComponentInChildren<BubbleControllerScript>();
         Vector2 shootDirection = GetMyEnemyFacingDirection();//敵の向いている方向を取得
-        //shootDirection.Normalize(); //方向ベクトルを正規化
-        //shootDirection.y = Random.Range(-0.5f, 0.5f); //少し上下にばらつきを持たせる
-        shootDirection = new Vector2(1.0f,0.0f); //水平に発射するように固定
+        shootDirection.Normalize(); //方向ベクトルを正規化
+        shootDirection.y = Random.Range(0, 1f); //少し上下にばらつきを持たせる
+       
         if (!bubbleScript)
         {
             Debug.LogWarning("BubbleControllerScript component not found on bubblePrefab.");
@@ -45,6 +50,8 @@ public class Attack_BubbleScript : EnemyAttackObjectBase
         {
             Debug.Log("bubbleScript is Valid");
         }
+
+        
             bubbleScript.BulletInitialize(shootDirection); //敵の向いている方向に発射
     }
 

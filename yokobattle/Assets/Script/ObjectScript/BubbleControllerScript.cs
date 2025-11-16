@@ -13,7 +13,7 @@ public class BubbleControllerScript : BulletController
     {
         // バブルの初期化処理
        TestStart();
-        buoyancyForce =Random.Range(-BuoyancyRange, BuoyancyRange);// 浮力の強さをランダムに設定
+        buoyancyForce =Random.Range(-BuoyancyRange * 0.5f, BuoyancyRange);// 浮力の強さをランダムに設定
         dampingForce = Random.Range(0.1f, dampingForceRange); // 減衰力の強さをランダムに設定
     }
 
@@ -74,6 +74,11 @@ public class BubbleControllerScript : BulletController
         {
             rb.linearDamping += dampingForce; // 徐々に減速させる
             rb.AddForce(new Vector2(0, buoyancyForce)); // 浮力を加える
+            if(rb.linearVelocity.x < 0.1f)
+            {
+            //    rb.gravityScale = 1f; // 水平速度が遅くなったら重力をかける
+              //  buoyancyForce = 0f; // 浮力を無効化
+            }
         }
     }
 }

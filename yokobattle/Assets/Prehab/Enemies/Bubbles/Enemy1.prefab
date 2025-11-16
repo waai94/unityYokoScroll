@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 3046042893520405795}
   - component: {fileID: 9112411744601293657}
   - component: {fileID: 2262859850602721679}
-  - component: {fileID: 6994485954963400533}
   - component: {fileID: 3008867078925972751}
+  - component: {fileID: 8529440665738611679}
   m_Layer: 8
   m_Name: Capsule
   m_TagString: Enemy
@@ -162,21 +162,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &6994485954963400533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516205876577606103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d3c948663f24274db1a4ca43fe89f97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy1Script
-  bounceBulletPrefab: {fileID: 7581312711080636949, guid: f0f9972198d47a341a12da728e23102c, type: 3}
-  BombPrehab: {fileID: 4280362545500283319, guid: f73b0481f47ec9643a7718a4f9cabde5, type: 3}
-  explosionBulletPrefab: {fileID: 930605209685628786, guid: 82c74c9dbf4d01f45b93f4c388a9ec9a, type: 3}
 --- !u!61 &3008867078925972751
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -223,6 +208,26 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 5.56, y: 10.69}
   m_EdgeRadius: 0
+--- !u!114 &8529440665738611679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516205876577606103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5991482464ffc6c4bbf2cc27bde904c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackPatternBase
+  attackPatterns:
+  - name: "\u30D0\u30D6\u30EB\u3053\u3046\u305B\u3093"
+    prefab: {fileID: 8866671029576425934, guid: 1d330c90928c85c4c82be4d79d4ef6e6, type: 3}
+    currentWeight: 0
+    attackType: 0
+    defaultWeight: 0
+    addedWeight: 0
+    weightingFactorByDetermingAttackType: 0
 --- !u!1 &7781825000596675254
 GameObject:
   m_ObjectHideFlags: 0

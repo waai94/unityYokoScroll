@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
 
             GameObject attackInstance = Instantiate(attackPrefab, transform.position, Quaternion.identity);
             BulletController controller = attackInstance.GetComponentInChildren<BulletController>();
-            Debug.Log("Attack Performed");
+        //    Debug.Log("Attack Performed");
             if (controller != null)
             {
                 controller.BulletInitialize(Vector2.right * forwardDirection);
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheckBase.position, Vector2.down, 0.31f);
         Debug.DrawRay(groundCheckBase.position, Vector2.down * 0.31f, Color.red);
-        Debug.Log($"Ground Check Hit: {hit.collider} ");
+       // Debug.Log($"Ground Check Hit: {hit.collider} ");
         return hit.collider != null;
     }
 

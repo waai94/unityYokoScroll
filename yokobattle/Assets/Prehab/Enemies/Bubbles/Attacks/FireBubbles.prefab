@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attack_BubbleScript
   bubblePrefab: {fileID: 8197729290198180270, guid: d3c2f7eea742c9e4e8d04d4406a732bd, type: 3}
-  bubbleFireInterval: 0.5
+  bubbleFireInterval: 0.05

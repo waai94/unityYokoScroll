@@ -10,9 +10,12 @@ public class EnemyController : MonoBehaviour
     public GameObject Target { get { return target; } }
     private Rigidbody2D rb;
     [SerializeField] private GameObject defaultBulletPrehab;//デフォルトの弾のプレハブ
+    protected float currentAngle;//現在の向きの角度
+    protected SpriteRenderer spriteRenderer;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,21 +29,53 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    void FixedUpdate()
+    {
+        //回転を適用
+        UpdateSpriteDirection();
+    }
+
+    void UpdateSpriteDirection()//スプライトの向きを更新
+    {
+        if(spriteRenderer)
+        {
+            if(currentAngle > 90f || currentAngle < -90f)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
+        }
+    }
+
     //ターゲットを見る
     public void LookToPosition(Vector2 targetPosition)
     {
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;//ターゲットへの方向ベクトルを計算
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;//角度を計算
-        rb.rotation = angle;
-        
-    }
+       currentAngle = angle;
+       
 
+    }
+    //ターゲットを見る
+    public void LookToTarget()
+    {
+               if (!target)
+        {
+            Debug.LogWarning("Target not found for EnemyController.");
+            return;
+        }
+        LookToPosition(target.transform.position);
+    }
     public Vector2 GetEnemyFacingDirection()//敵の向いている方向を取得
     {
-        float angleInRadians = rb.rotation * Mathf.Deg2Rad;
+        float angleInRadians = currentAngle * Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)).normalized;
     }
 
+    //放物線ジャンプを行うメソッド
     public void JumpToPosition(Vector2 startPos, Vector2 targetPos, float arcHeight)
     {
         float gravity = Mathf.Abs(Physics2D.gravity.y);
