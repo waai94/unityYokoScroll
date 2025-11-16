@@ -55,6 +55,12 @@ public class EnemyAttackObjectBase : MonoBehaviour
 
     protected void AttackEnd()
     {
+        if(!parentPattern)
+        {
+            Debug.LogError("EnemyAttackObjectBase: Parent Pattern is null!");
+            Invoke("StartAttack",2.0f);//parentPatternがnullなら2秒後に再度開始を試みる(攻撃の動作確認用のため)
+            return;
+        }
         parentPattern.EnemyAttackStart();//親の攻撃パターンを再度開始
         Destroy(this.gameObject);//オブジェクト破棄
     }
@@ -79,5 +85,21 @@ public class EnemyAttackObjectBase : MonoBehaviour
             return;
         }
         enemyController = controller;
+    }
+
+    // 敵の向いている方向を取得
+    protected Vector2 GetMyEnemyFacingDirection()
+    {
+      if(!enemyController) //EnemyControllerがnullの場合
+        {
+            //Debug.LogError("EnemyAttackObjectBase: Parent Enemy Object is null!");
+            return Vector2.right;//デフォルトで右方向を返す
+        }
+        else
+        {
+            return enemyController.GetEnemyFacingDirection();//EnemyControllerから取得
+        }
+
+         
     }
 }

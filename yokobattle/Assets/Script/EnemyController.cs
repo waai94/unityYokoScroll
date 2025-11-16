@@ -35,6 +35,12 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    public Vector2 GetEnemyFacingDirection()//“G‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚ðŽæ“¾
+    {
+        float angleInRadians = rb.rotation * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians)).normalized;
+    }
+
     public void JumpToPosition(Vector2 startPos, Vector2 targetPos, float arcHeight)
     {
         float gravity = Mathf.Abs(Physics2D.gravity.y);

@@ -51,6 +51,7 @@ public class BulletController : MonoBehaviour
         {
             Debug.LogWarning("Rigidbody2D component not found on bullet.");
         }
+        Debug.Log("Bullet initialized with direction: " + direction);
     }
     // Update is called once per frame
     protected void Update()
