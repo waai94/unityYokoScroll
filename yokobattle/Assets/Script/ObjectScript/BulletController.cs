@@ -59,10 +59,10 @@ public class BulletController : MonoBehaviour
         
     }
 
-    //
+    // Õ“Ë‚Ìˆ—
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-        HealthManager health = collision.gameObject.GetComponent<HealthManager>();
+        HealthManager health = collision.gameObject.GetComponent<HealthManager>(); // Check for HealthManager component
         if (health != null)
         {
             health.TakeDamage(defaultDamage);

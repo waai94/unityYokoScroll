@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerDeathScriipt : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    bool isDead = false;
     void Start()
     {
         HealthManager healthManager = GetComponent<HealthManager>();
@@ -29,6 +30,8 @@ public class PlayerDeathScriipt : MonoBehaviour
 
     public void OnPlayerDeath()
     {
+        if (isDead) return; // Prevent multiple death triggers
+        isDead = true;
         Debug.Log("Player has died by script.");
         // Add additional logic for player death here
         GameObject gameManager = GameObject.FindWithTag(tag: "GameController");
@@ -47,6 +50,9 @@ public class PlayerDeathScriipt : MonoBehaviour
         {
             Debug.LogError("GameManagerScript component not found on GameManager.");
         }
+
+        //ŽžŠÔ‚ð’x‚­‚·‚é
+        Time.timeScale = 0.2f;
     }
 
     }

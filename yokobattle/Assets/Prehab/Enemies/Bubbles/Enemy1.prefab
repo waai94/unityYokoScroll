@@ -228,6 +228,7 @@ MonoBehaviour:
     defaultWeight: 0
     addedWeight: 0
     weightingFactorByDetermingAttackType: 0
+  delayForFirstAttack: 1
 --- !u!1 &7781825000596675254
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +240,7 @@ GameObject:
   - component: {fileID: 6281537163724247411}
   m_Layer: 8
   m_Name: Enemy1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
