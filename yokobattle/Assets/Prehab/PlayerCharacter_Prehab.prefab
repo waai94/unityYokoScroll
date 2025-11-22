@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 6389951401698236201}
   - component: {fileID: 6194101443559070064}
   - component: {fileID: 2159538920255994870}
+  - component: {fileID: 7579762845213654709}
   m_Layer: 6
   m_Name: PlayerCharacter_Prehab
   m_TagString: Player
@@ -233,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthManager
   maxHealth: 250
+  invincibilityDuration: 0
 --- !u!114 &6194101443559070064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +357,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &7579762845213654709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7127406342838309160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b5d59d2f9a8dd04db62ee462eae6482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterInfoScript
+  characterName: Mikan
+  characterAge: 21
+  nickname: Angel
+  signatureLine: At least I have chicken!
 --- !u!1 &8429610162659563830
 GameObject:
   m_ObjectHideFlags: 0

@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthManager
   maxHealth: 100
+  invincibilityDuration: 0
 --- !u!50 &2262859850602721679
 Rigidbody2D:
   serializedVersion: 5
@@ -238,6 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6281537163724247411}
+  - component: {fileID: 5157197064207049094}
   m_Layer: 8
   m_Name: Enemy1
   m_TagString: Enemy
@@ -261,3 +263,19 @@ Transform:
   - {fileID: 4374456092713585302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5157197064207049094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7781825000596675254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b5d59d2f9a8dd04db62ee462eae6482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterInfoScript
+  characterName: Rei
+  characterAge: 21
+  nickname: Bubblers
+  signatureLine: At least I have chicken!
