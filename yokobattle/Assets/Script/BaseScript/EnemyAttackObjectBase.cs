@@ -16,8 +16,9 @@ public class EnemyAttackObjectBase : MonoBehaviour
     {
         parentPattern = attackPatternBase;
         parentEnemyObject = parentEnemy;
-        
-     
+        Debug.Log("EnemyAttackObjectBase: InitializeObject called.");
+
+
         //確認
         if (!parentEnemyObject)
         {
@@ -43,7 +44,7 @@ public class EnemyAttackObjectBase : MonoBehaviour
     //
     /// </summary>
     // 攻撃開始
-    protected void StartAttack()
+    virtual protected void StartAttack()
     {
         //攻撃ロジックをここに実装
         //具体的な攻撃処理は派生クラスで実装

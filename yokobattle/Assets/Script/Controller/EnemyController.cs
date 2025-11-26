@@ -107,7 +107,17 @@ public class EnemyController : MonoBehaviour
         rb.linearVelocity = new Vector2(velocityX, velocityY);
     }
 
-
+    //プレイヤーの位置に向かって放物線ジャンプ
+    public void JumpToTarget(float arcHeight)//プレイヤーの位置に向かって放物線ジャンプ
+    {
+        if (!target)
+        {
+            Debug.LogWarning("Target not found for JumpToTarget.");
+            return;
+        }
+        Vector2 playerPosition = target.transform.position;
+        JumpToPosition(transform.position, playerPosition, arcHeight);
+    }
     public float angleToTarget(Vector2 targetPosition)//ターゲットへの角度を取得
     {
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;//ターゲットへの方向ベクトルを計算

@@ -32,7 +32,7 @@ public class Attack_BubbleScript : EnemyAttackObjectBase
         if (enemyController)
         {
             enemyController.LookToTarget(); //敵が向いている方向を更新
-                                          Debug.Log("Enemy Look To Target");
+                                       
         }
         //バブルを発射するロジックをここに実装
         GameObject bubbleInstance = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
@@ -48,7 +48,7 @@ public class Attack_BubbleScript : EnemyAttackObjectBase
         }
         else
         {
-            Debug.Log("bubbleScript is Valid");
+          
         }
 
         

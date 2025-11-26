@@ -17,7 +17,13 @@ public class EnemyAttackPatternBase : MonoBehaviour
 
     }
 
-
+    public enum condtionExpressionType
+    {
+        greaterThan,//より大きい
+        lessThan,//より小さい
+        equalTo,//等しい
+        none//なし
+    }
     [Serializable]protected class AttackPatternState
     {
         public string name; //攻撃パターン名 attack pattern name
@@ -26,20 +32,31 @@ public class EnemyAttackPatternBase : MonoBehaviour
         public GameObject prefab; //攻撃パターンのプレハブ
         public float currentWeight = 0; //この攻撃パターンの現在の重み
         public determingAttackType attackType = determingAttackType.none; //攻撃タイプ
+        public determingAttackType attackCondtion = determingAttackType.none; //攻撃条件タイプ
+        public condtionExpressionType condtionExpression = condtionExpressionType.none; //条件の表現タイプ
+
+        public float attackConditionValue = 0; //攻撃条件の値
         public float defaultWeight = 0; //デフォルトの重み
         public float addedWeight = 1; //このクラス以外が発動したときに追加される重み
         public float weightingFactorByDetermingAttackType = 1; //重み付け係数
+
         //!!重みの計算結果が同時だったら、リストの先頭に近い方が優先される!!//
     }
 
 
     [SerializeField] protected List<AttackPatternState> attackPatterns; //攻撃パターンのリスト
     [SerializeField] protected float delayForFirstAttack = 1.0f; //最初の攻撃までの遅延時間
+    HealthManager healthManager; //敵の体力管理コンポーネント
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Invoke("EnemyAttackStart", delayForFirstAttack);//最初の攻撃を遅延させて開始
+        healthManager = GetComponent<HealthManager>();
+        if(healthManager == null)
+        {
+            healthManager = GetComponentInChildren<HealthManager>(); //子オブジェクトからも探す
+        }
     }
 
     // Update is called once per frame
@@ -57,6 +74,8 @@ public class EnemyAttackPatternBase : MonoBehaviour
             //選択された攻撃パターンに基づいて攻撃を実行
          GameObject attackObject = Instantiate(attackPattern.prefab, transform.position, transform.rotation);
             EnemyAttackObjectBase attackScript = attackObject.GetComponent<EnemyAttackObjectBase>();
+            Debug.Assert(attackScript != null, "EnemyAttackObjectBase component not found on attack prefab.");
+            Debug.Log("Executing Attack Pattern: " + attackPattern.name);
             attackScript.InitializeObject(this.gameObject, this);
             //必要に応じてattackScriptのプロパティを設定
 
@@ -68,6 +87,8 @@ public class EnemyAttackPatternBase : MonoBehaviour
     {
         //攻撃パターンを決定するロジックをここに実装
         AttackPatternState selectedPattern = null;
+       List<AttackPatternState> validPatterns = new List<AttackPatternState>();
+        validPatterns = FilterAttackPetterns();
         foreach (var pattern in attackPatterns)
         {
             //重みの計算ロジックをここに実装
@@ -82,7 +103,7 @@ public class EnemyAttackPatternBase : MonoBehaviour
                     break;
                 case determingAttackType.healthBased:
                     //体力に基づく重み付けの計算例
-                    float healthPercentage = 0.5f; //仮の体力割合 実際はHealthManagerから取得
+                    float healthPercentage = healthManager.GetHealthPercentage(); //仮の体力割合 実際はHealthManagerから取得
                     weight += (1.0f - healthPercentage) * pattern.weightingFactorByDetermingAttackType;
                     break;
                 case determingAttackType.timeBased:
@@ -120,6 +141,61 @@ public class EnemyAttackPatternBase : MonoBehaviour
             }
         }
     }
+    //攻撃パターンのリストを取得するメソッド
+    List<AttackPatternState> FilterAttackPetterns()
+    {
+        List<AttackPatternState> result = new List<AttackPatternState>();
 
-    
+        foreach (var pattern in attackPatterns)
+        {
+            bool shouldPass = EvaluatePattern(pattern);
+            if (shouldPass)
+            {
+                result.Add(pattern);
+            }
+        }
+
+        return result;
+    }
+    //攻撃パターンの条件を評価するメソッド
+    bool EvaluatePattern(AttackPatternState pattern)
+    {
+        switch (pattern.attackCondtion)
+        {
+            case determingAttackType.distanceBased:
+                float distance = Vector3.Distance(transform.position, Vector3.zero);
+                return EvaluateCondition(distance, pattern);
+
+            case determingAttackType.healthBased:
+                float hpPercent = healthManager.GetHealthPercentage();
+                return EvaluateCondition(hpPercent, pattern);
+
+            case determingAttackType.timeBased:
+                //考え中の条件ができたらここへ
+                return true;
+
+            case determingAttackType.none:
+            default:
+                return true;
+        }
+    }
+    //条件を評価するメソッド
+    bool EvaluateCondition(float targetValue, AttackPatternState pattern)
+    {
+        switch (pattern.condtionExpression)
+        {
+            case condtionExpressionType.greaterThan://より大きい
+                return targetValue > pattern.attackConditionValue;
+
+            case condtionExpressionType.lessThan://より小さい
+                return targetValue < pattern.attackConditionValue;
+
+            case condtionExpressionType.equalTo://ほぼ等しい
+                return Mathf.Abs(targetValue - pattern.attackConditionValue) < 0.01f;
+
+            case condtionExpressionType.none:
+            default:
+                return true;
+        }
+    }
 }

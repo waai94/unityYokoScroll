@@ -22,8 +22,9 @@ public class NameUIManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        TextMeshPro = GetComponent<TextMeshPro>();
-        if(!TextMeshPro)
+        TextMeshProUGUI TextMeshPro= GetComponent<TextMeshProUGUI>(); //TextMeshProコンポーネントを取得
+
+        if (!TextMeshPro)
         {
             Debug.LogError("TextMeshPro component not found on " + gameObject.name);
             return;
@@ -54,13 +55,15 @@ public class NameUIManager : MonoBehaviour
         }
 
         GameObject character = GameObject.FindGameObjectWithTag(findTag);
-       if(!character)return $"{findTag} not found";
+        Debug.Log($"Finding character with tag: {findTag} {character}");
+        if (!character)return $"{findTag} not found";
         CharacterInfoScript info = character.GetComponent<CharacterInfoScript>();
+
         if(!info)
         {
             info = character.GetComponentInChildren<CharacterInfoScript>(); //子オブジェクトにある場合
         }
-        if(!info)return $"{findTag} CharacterInfoScript not found";
+        if(!info)return $"{findTag} :: CharacterInfoScript not found";
         name = info.CharacterName;
         return name;
     }
