@@ -228,6 +228,7 @@ MonoBehaviour:
     currentWeight: 0
     attackType: 0
     attackCondtion: 3
+    condtionExpression: 3
     attackConditionValue: 0
     defaultWeight: 0
     addedWeight: 1
@@ -237,6 +238,7 @@ MonoBehaviour:
     currentWeight: 0
     attackType: 0
     attackCondtion: 3
+    condtionExpression: 3
     attackConditionValue: 0
     defaultWeight: 0
     addedWeight: 2
@@ -246,9 +248,20 @@ MonoBehaviour:
     currentWeight: 0
     attackType: 0
     attackCondtion: 3
+    condtionExpression: 3
     attackConditionValue: 0
     defaultWeight: 0
     addedWeight: 1
+    weightingFactorByDetermingAttackType: 0
+  - name: "\u6CE1\u30D0\u30E9\u30DE\u30AD"
+    prefab: {fileID: 8866671029576425934, guid: ba5c61b1aba4fda468c2e0d983bf2e39, type: 3}
+    currentWeight: 0
+    attackType: 0
+    attackCondtion: 1
+    condtionExpression: 1
+    attackConditionValue: 0.6
+    defaultWeight: 0
+    addedWeight: 2
     weightingFactorByDetermingAttackType: 0
   delayForFirstAttack: 1
 --- !u!114 &8765638721988857721

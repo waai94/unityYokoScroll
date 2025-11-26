@@ -580,6 +580,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy1
       objectReference: {fileID: 0}
+    - target: {fileID: 8529440665738611679, guid: 669d646abe253044db1e91808e9be3da, type: 3}
+      propertyPath: attackPatterns.Array.data[3].addedWeight
+      value: 1323112
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529440665738611679, guid: 669d646abe253044db1e91808e9be3da, type: 3}
+      propertyPath: attackPatterns.Array.data[3].currentWeight
+      value: 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529440665738611679, guid: 669d646abe253044db1e91808e9be3da, type: 3}
+      propertyPath: attackPatterns.Array.data[3].defaultWeight
+      value: 1.2321321e+10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
