@@ -9,6 +9,7 @@ public class HealthManager : MonoBehaviour
     public float MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
     public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
 
+
     [SerializeField] private float invincibilityDuration = 0f;
     private float invincibilityTimer = 0f;
 

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2262859850602721679}
   - component: {fileID: 3008867078925972751}
   - component: {fileID: 8529440665738611679}
+  - component: {fileID: 8765638721988857721}
   m_Layer: 8
   m_Name: Capsule
   m_TagString: Enemy
@@ -226,10 +227,46 @@ MonoBehaviour:
     prefab: {fileID: 8866671029576425934, guid: 1d330c90928c85c4c82be4d79d4ef6e6, type: 3}
     currentWeight: 0
     attackType: 0
+    attackCondtion: 3
+    attackConditionValue: 0
     defaultWeight: 0
-    addedWeight: 0
+    addedWeight: 1
+    weightingFactorByDetermingAttackType: 0
+  - name: "\u6CE1\u7206\u5F3E"
+    prefab: {fileID: 7434929807833144263, guid: 64ffab1f881c8d64cac64b7cab1ed2d6, type: 3}
+    currentWeight: 0
+    attackType: 0
+    attackCondtion: 3
+    attackConditionValue: 0
+    defaultWeight: 0
+    addedWeight: 2
+    weightingFactorByDetermingAttackType: 0
+  - name: "\u30B8\u30E3\u30F3\u30D7\u3059\u308B"
+    prefab: {fileID: 8866671029576425934, guid: 8d0590c9cdc5f6444b4e924fa40b3054, type: 3}
+    currentWeight: 0
+    attackType: 0
+    attackCondtion: 3
+    attackConditionValue: 0
+    defaultWeight: 0
+    addedWeight: 1
     weightingFactorByDetermingAttackType: 0
   delayForFirstAttack: 1
+--- !u!114 &8765638721988857721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516205876577606103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b5d59d2f9a8dd04db62ee462eae6482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterInfoScript
+  characterName: Kobayashi
+  characterAge: 21
+  nickname: P
+  signatureLine: At least I have chicken!
 --- !u!1 &7781825000596675254
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +276,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6281537163724247411}
-  - component: {fileID: 5157197064207049094}
   m_Layer: 8
   m_Name: Enemy1
   m_TagString: Enemy
@@ -263,19 +299,3 @@ Transform:
   - {fileID: 4374456092713585302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5157197064207049094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7781825000596675254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b5d59d2f9a8dd04db62ee462eae6482, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterInfoScript
-  characterName: Rei
-  characterAge: 21
-  nickname: Bubblers
-  signatureLine: At least I have chicken!
