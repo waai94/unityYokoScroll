@@ -89,7 +89,7 @@ public class EnemyAttackPatternBase : MonoBehaviour
         AttackPatternState selectedPattern = null;
        List<AttackPatternState> validPatterns = new List<AttackPatternState>();
         validPatterns = FilterAttackPetterns();
-        foreach (var pattern in attackPatterns)
+        foreach (var pattern in validPatterns)
         {
             //重みの計算ロジックをここに実装
             float weight = pattern.currentWeight;
@@ -152,6 +152,7 @@ public class EnemyAttackPatternBase : MonoBehaviour
             if (shouldPass)
             {
                 result.Add(pattern);
+                Debug.Log("Pattern " + pattern.name + " passed the evaluation.");
             }
         }
 
@@ -168,6 +169,7 @@ public class EnemyAttackPatternBase : MonoBehaviour
 
             case determingAttackType.healthBased:
                 float hpPercent = healthManager.GetHealthPercentage();
+                Debug.Log("Evaluating health-based condition: HP% = " + hpPercent +"Result is " + EvaluateCondition(hpPercent, pattern));
                 return EvaluateCondition(hpPercent, pattern);
 
             case determingAttackType.timeBased:
@@ -184,10 +186,11 @@ public class EnemyAttackPatternBase : MonoBehaviour
     {
         switch (pattern.condtionExpression)
         {
-            case condtionExpressionType.greaterThan://より大きい
+            case condtionExpressionType.greaterThan://より大きいA
                 return targetValue > pattern.attackConditionValue;
 
             case condtionExpressionType.lessThan://より小さい
+                Debug.Log("Evaluating lessThan condition: Target Value = " + targetValue + ", Condition Value = " + pattern.attackConditionValue);
                 return targetValue < pattern.attackConditionValue;
 
             case condtionExpressionType.equalTo://ほぼ等しい
