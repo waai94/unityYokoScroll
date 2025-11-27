@@ -263,6 +263,16 @@ MonoBehaviour:
     defaultWeight: 0
     addedWeight: 2
     weightingFactorByDetermingAttackType: 0
+  - name: "\u6CE1\u5438\u53CE"
+    prefab: {fileID: 6702007392958159367, guid: ed143d500d2a5464c8727bab99a25066, type: 3}
+    currentWeight: 0
+    attackType: 1
+    attackCondtion: 1
+    condtionExpression: 1
+    attackConditionValue: 0.6
+    defaultWeight: 0
+    addedWeight: 2
+    weightingFactorByDetermingAttackType: 0
   delayForFirstAttack: 1
 --- !u!114 &8765638721988857721
 MonoBehaviour:

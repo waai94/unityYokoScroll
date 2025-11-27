@@ -53,8 +53,8 @@ public class Attack_FireRandomBubble : EnemyAttackObjectBase
                 Debug.LogWarning("BubbleControllerScript component not found on bubblePrefab.");
                 return;
             }
-          
 
+            bubbleScript.LifeTime = 10.0f;//Ÿ‚ÌUŒ‚‚Ég‚¤‚Ì‚Åõ–½‚ğ‰„‚Î‚·
             bubbleScript.BulletInitialize(shootDirection); //“G‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚É”­Ë
            // Debug.Log("Bubble fired in direction: " + shootDirection);
         }
