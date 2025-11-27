@@ -6,6 +6,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] protected Vector2 direction = Vector2.right; // Default direction
     [SerializeField] protected float defaultDamage = 1; // Default damage value
     [SerializeField] protected float lifetime = 5f; // Lifetime of the bullet in seconds
+    public float LifeTime { get { return lifetime; } set { lifetime = value; } }// Public property to get/set lifetime
     [SerializeField] protected float gravityScale = 0f; // Gravity scale for the bullet
     protected Rigidbody2D rb;
     void Awake()
