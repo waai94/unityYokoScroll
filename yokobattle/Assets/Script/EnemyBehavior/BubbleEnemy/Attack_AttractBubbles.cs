@@ -58,8 +58,26 @@ public class Attack_AttractBubbles : EnemyAttackObjectBase
         {
             if (bubble != null)
             {
-                Vector3 direction = (parentEnemyObject.transform.position - bubble.transform.position).normalized;
-                bubble.GetComponentInChildren<Rigidbody>()?.AddForce(direction * attractForce);//RigidBodyÇÕÅAéqÇÃÇ»Ç©Ç…Ç†ÇÈÇ©ÇÁInChildren.RigidbodyÇ™Ç†ÇÈèÍçáÇ…óÕÇâ¡Ç¶ÇÈ
+                GameObject bubbleObject = bubble.GetComponentInChildren<BulletController>(true)?.gameObject;
+                if(!bubbleObject)
+                {
+                    Debug.LogWarning("Bubble does not have a BulletController component.");
+                    continue;
+                }
+                Vector3 direction = (parentEnemyObject.transform.position - bubbleObject.transform.position).normalized;
+                Vector2 direction2D = new Vector2(direction.x, direction.y);
+                bubble.GetComponentInChildren<BulletController>()?.BulletInitialize(direction2D);
+                bubble.GetComponentInChildren<Rigidbody2D>()?.AddForce(direction2D * attractForce, ForceMode2D.Impulse);
+                // Debug log to confirm attraction
+
+                if (!bubble.GetComponentInChildren<Rigidbody2D>())
+                {
+                    Debug.LogWarning("Bubble does not have a Rigidbody2D component.");
+                }
+                else
+                {
+                    Debug.Log("Attracting bubble towards enemy.");
+                }
             }
         }
     }
