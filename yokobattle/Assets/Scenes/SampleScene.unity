@@ -400,6 +400,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCharacter_Prehab
       objectReference: {fileID: 0}
+    - target: {fileID: 7579762845213654709, guid: dd2ba41d091685d4397bbbe8d1e2ab91, type: 3}
+      propertyPath: characterName
+      value: Kobayashi
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4170046990879939247, guid: dd2ba41d091685d4397bbbe8d1e2ab91, type: 3}
     m_RemovedGameObjects: []
@@ -538,11 +542,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6281537163724247411, guid: 669d646abe253044db1e91808e9be3da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.37879
+      value: 5.22
       objectReference: {fileID: 0}
     - target: {fileID: 6281537163724247411, guid: 669d646abe253044db1e91808e9be3da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.73492
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 6281537163724247411, guid: 669d646abe253044db1e91808e9be3da, type: 3}
       propertyPath: m_LocalPosition.z

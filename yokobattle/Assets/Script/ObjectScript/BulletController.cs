@@ -63,15 +63,39 @@ public class BulletController : MonoBehaviour
     }
 
     // 衝突時の処理
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Bullet collided with: " + other.gameObject.name);
+        HealthManager health = other.gameObject.GetComponent<HealthManager>(); // Check for HealthManager component
+        if (!health) health = other.gameObject.GetComponentInParent<HealthManager>();// 親オブジェクトも確認
+        if (!health) health = other.gameObject.GetComponentInChildren<HealthManager>();//
+  
+        if (health != null)
+        {
+            health.TakeDamage(defaultDamage);
+        }else
+        {
+            Debug.Log("Collided object has no HealthManager.");
+        }
+        Destroy(gameObject);
+    }
+
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         HealthManager health = collision.gameObject.GetComponent<HealthManager>(); // Check for HealthManager component
+        if (!health) health = collision.gameObject.GetComponentInParent<HealthManager>();// 親オブジェクトも確認
+        if (!health) health = collision.gameObject.GetComponentInChildren<HealthManager>();//
         if (health != null)
         {
             health.TakeDamage(defaultDamage);
         }
+        else
+        {
+            Debug.Log("Collided object has no HealthManager.");
+        }
         Destroy(gameObject);
     }
+
     // 弾を消去するメソッド
     protected void DestroyBullet()
     {

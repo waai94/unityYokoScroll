@@ -40,20 +40,11 @@ public class BubbleControllerScript : BulletController
         CancelInvoke("DestroyBubble");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
-        // プレイヤーに衝突した場合
-        if (collision.CompareTag("Player"))
-        {
-            // プレイヤーにダメージを与える
-            var playerHealth = collision.GetComponent<HealthManager>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(defaultDamage);
-            }
-            // バブルを破壊
-            DestroyBubble();
-        }
+        DestroyBubble();
+        base.OnTriggerEnter2D(other);
+       
     }
 
     private void DestroyBubble()
@@ -63,8 +54,7 @@ public class BubbleControllerScript : BulletController
         {
             Instantiate(popEffectPrefab, transform.position, Quaternion.identity);
         }
-        // バブルを破壊
-        Destroy(gameObject);
+        
     }
 
     private void FixedUpdate()
