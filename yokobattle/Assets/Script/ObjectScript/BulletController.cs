@@ -47,6 +47,8 @@ public class BulletController : MonoBehaviour
         if (rb != null)
         {
             rb.linearVelocity = direction * speed; // Set velocity based on initialized direction
+            rb.linearDamping = 0f; // No linear damping by default
+            
         }
         else
         {

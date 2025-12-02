@@ -112,7 +112,7 @@ MonoBehaviour:
   gravityScale: 0
   popEffectPrefab: {fileID: 0}
   BuoyancyRange: 25
-  dampingForceRange: 0.03
+  dampingForceRange: 0.01
 --- !u!50 &2805138732019269783
 Rigidbody2D:
   serializedVersion: 5
